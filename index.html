@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File converter</title>
+    <link rel="stylesheet" href="style/app.css">
+</head>
+<body class="bg-background dark:bg-darkBackground text-textColor dark:text-darkTextColor pt-12 pb-6 min-h-screen bg-[url(../images/topographyLight.svg)] dark:bg-[url(../images/topographyDark.svg)] rtl:font-rtl ltr:font-ltr">
+    <!-- svgs -->
+     <svg class="hidden">
+        <symbol id="chevron-down" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </symbol>
+        <symbol id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </symbol>
+        <symbol id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+        </symbol>
+        <symbol id="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-up"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/>
+        </symbol>
+        <symbol id="file-plus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M12 18v-6"/>
+        </symbol>
+        <symbol id="arrow-left-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+        </symbol>
+        <symbol id="arrow-right-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </symbol>
+    </svg>
+    <!-- header -->
+    <header class="container bg-surface-500/30 dark:bg-darksurface-400/50 backdrop-blur-xs md:py-2 lg:py-4 md:px-8 lg:px-10 w-11/12 sm:w-full rounded-3xl flex justify-between items-center">
+        <div class="flex gap-2">
+            <!-- dropDodwn -->
+            <div class="relative select-none">
+                <!-- dropdown head -->
+                <div class="lang-dropDown-btn flex gap-3 items-center cursor-pointer">
+                    <img src="images/Flag_of_Iran.svg.png" alt="" class="w-8 rounded-xs">
+                    <span class="font-bold">فارسی</span>
+                    <svg class="w-6 h-6 transition-transform duration-200"><use href="#chevron-down"></use></svg>
+                </div>
+                <!-- drop down content -->
+                <div class="lang-dropDown-content min-w-full h-max absolute right-0 left-0 top-[120%] p-2 rounded bg-surface-500 dark:bg-darksurface-400 space-y-2 transition-all hide">
+                    <a href="#" class="flex items-center gap-1">
+                        <img src="images/Flag_of_Iran.svg.png" alt="" class="w-8 rounded-xs">
+                        <span class="font-bold">فارسی</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-1">
+                        <img src="images/Flag_of_the_United_States_(1912-1959).svg.png" alt="" class="w-8 rounded-xs">
+                        <span class="font-bold">English</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-1">
+                        <img src="images/Flag_of_Saudi_Arabia.svg.png" alt="" class="w-8 rounded-xs">
+                        <span class="font-bold">العربی</span>
+                    </a>
+                </div>
+            </div>
+            <!-- theme change handler -->
+            <svg class="change-theme-btn dark:hidden w-6 h-6 cursor-pointer"><use href="#moon-icon"></use></svg>
+            <svg class="change-theme-btn hidden dark:block w-6 h-6 cursor-pointer"><use href="#sun-icon"></use></svg>
+        </div>
+        <!-- logo -->
+        <a href="#">
+            <img src="images/logo.png" alt="" class="select-none w-18">
+        </a>
+    </header>
+
+    <!-- upload section -->
+    <section class="mt-10 px-2">
+        <h1 class="text-center text-3xl sm:text-4xl font-bold">کانورتر فایل</h1>
+        <!-- upload window -->
+        <form action="" id="drop-window" class="flex flex-col justify-center items-center gap-6 bg-surface-400 dark:bg-darksurface-500 max-w-150 mx-auto rounded-lg py-16 mt-6 relative">
+            <svg class="w-12 md:w-16 h-12 md:h-16"><use href="#file-icon"></use></svg>
+            <label for="file-upload-input" class="bg-primary text-darkTextColor px-6 py-3 rounded text-center cursor-pointer font-bold text-lg">فایل خود را انتخاب کنید</label>
+            <input type="file" hidden id="file-upload-input" multiple>
+            
+        </form>
+    </section>
+
+    <!-- result section -->
+    <section class="container px-4 mt-10">
+        <form class="">
+            <label for="file-upload-input" class="flex gap-1.5 bg-surface-400 dark:bg-darksurface-400 w-max text-primary text-lg py-2 px-2.5 rtl:rounded-tr-md ltr:rounded-tl-md rtl:rounded-tl-4xl ltr:rounded-tr-4xl cursor-pointer">
+                <svg class="w-6 h-6"><use href="#file-plus-icon"></use></svg>
+                <span>اضافه کردن فایل</span>
+            </label>
+            <!-- records -->
+            <div> <!-- this div is for curving the first item from results -->
+                <div class="flex justify-between w-full gap-0.5 items-center sm:text-xl bg-surface-300 dark:bg-darksurface-500 p-3 rtl:first:rounded-tl-md ltr:first:rounded-tr-md">
+                    <div class="flex items-center gap-2 sm:gap-6 md:gap-12 lg:gap-20">
+                        <!-- title -->
+                        <span class="break-words">my image.jpg</span>
+                        <span class="text-sm text-thinTextColor dark:text-darkThinTextColor">به</span>
+                        <select name="" id="" class="border-none outline-none">
+                            <option value="png" class="dark:bg-darksurface-400">PNG</option>
+                            <option value="svg" class="dark:bg-darksurface-400">SVG</option>
+                            <option value="jpeg" class="dark:bg-darksurface-400">jpeg</option>
+                        </select>
+                    </div>
+                    <!-- ready or not -->
+                    <!-- <span class="hidden sm:block text-lg border-2 text-primary border-primary py-1 px-1 sm:px-3 rounded w-max text-center">آماده</span>
+                    <span class="w-4 h-4 sm:hidden bg-primary rounded-full"></span> -->
+                    <span class="hidden sm:block text-lg border-2 text-rose-500 border-rose-500 py-1 px-1 sm:px-3 rounded w-max text-center">آماده نیست</span>
+                    <span class="w-4 h-4 sm:hidden bg-rose-500 rounded-full"></span>
+                    <!-- size -->
+                    <span class="text-nowrap">165 kb</span>
+                </div>
+                <div class="flex justify-between gap-0.5 w-full items-center sm:text-xl bg-surface-300 dark:bg-darksurface-500 p-3 rtl:first:rounded-tl-md ltr:first:rounded-tr-md">
+                    <div class="flex items-center gap-2 sm:gap-6 md:gap-12 lg:gap-20">
+                        <!-- title -->
+                        <span class="break-words">duble image.jpg</span>
+                        <span class="text-sm text-thinTextColor dark:text-darkThinTextColor">به</span>
+                        <select name="" id="" class="border-none outline-none">
+                            <option value="png" class="dark:bg-darksurface-400">PNG</option>
+                            <option value="svg" class="dark:bg-darksurface-400">SVG</option>
+                            <option value="jpeg" class="dark:bg-darksurface-400">jpeg</option>
+                        </select>
+                    </div>
+                    <!-- ready or not -->
+                    <span class="hidden sm:block text-lg border-2 text-primary border-primary py-1 px-1 sm:px-3 rounded w-max text-center">آماده</span>
+                    <span class="w-4 h-4 sm:hidden bg-primary rounded-full"></span>
+                    <!-- <span class="hidden sm:block text-lg border-2 text-rose-500 border-rose-500 py-1 px-1 sm:px-3 rounded w-max text-center">آماده نیست</span>
+                    <span class="w-4 h-4 sm:hidden bg-rose-500 rounded-full"></span> -->
+                    <!-- size -->
+                    <span class="text-nowrap">200 kb</span>
+                </div>
+            </div>
+            <div class="flex justify-between items-center bg-surface-400 dark:bg-darksurface-400 p-3 rounded-b-md">
+                <div class=""><span>2</span> فایل اضافه شده</div>
+                <button type="submit" class="bg-textColor dark:bg-darkTextColor text-darkTextColor dark:text-textColor flex items-center gap-1 px-2 py-1 font-bold rounded cursor-pointer">
+                    <span>تبدیل</span>
+                    <svg class="w-7 h-7 hidden rtl:block"><use href="#arrow-left-icon"></use></svg>
+                    <svg class="w-7 h-7 hidden ltr:block"><use href="#arrow-right-icon"></use></svg>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- options section -->
+    <section class="mt-10 bg-background dark:bg-darkBackground custom-shadow">
+        <div class="container py-8 space-y-6">
+            <h2 class="text-xl sm:text-2xl text-center font-bold">به سادگی فایل های خود را کانورت کنید</h2>
+            <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-2">
+                <div class="flex flex-col gap-0.5">
+                    <div class="flex gap-2 items-center">
+                        <img src="images/1-action-icon.svg" alt="" class="dark:hidden">
+                        <img src="images/1-dark-action-icon.svg" alt="" class="hidden dark:block">
+                        <span>فایل خود را آپلود یا با روش کشیدن و رها کردن در کادر بارگزاری کنید</span>
+                    </div>
+                    <!-- indent -->
+                    <div class="flex flex-col gap-1 ms-3">
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <img src="images/3-action-icon.svg" alt="" class="dark:hidden">
+                        <img src="images/3-dark-action-icon.svg" alt="" class="hidden dark:block">
+                        <span>منظر بمانید تا فایل آماده شود</span>
+                    </div>
+                    <!-- indent -->
+                    <div class="flex flex-col gap-1 ms-3">
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                        <span class="w-1 h-4 bg-textColor/80 dark:bg-darkTextColor rounded-full"></span>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <img src="images/4-action-icon.svg" alt="" class="dark:hidden">
+                        <img src="images/4-dark-action-icon.svg" alt="" class="hidden dark:block">
+                        <span>فایل خود را بارگیری کنید</span>
+                    </div>
+                </div>
+                <img src="images/detail-section-pic.png" alt="" class="max-w-52 md:max-w-100 lg:max-w-130">
+            </div>
+        </div>
+    </section>
+
+    <!-- convert to  section -->
+    <section class="container bg-surface-400 dark:bg-darksurface-500 rounded-3xl p-6 mt-16">
+        <header class="w-full bg-darkBackground dark:bg-background text-darkTextColor dark:text-textColor p-5 rounded-xl mb-6 text-center">فایل های خود را به فرمت های دلخواه تبدیل کنید</header>
+        <!-- to-*... grid -->
+        <div class="flex flex-wrap gap-4 font-ltr mx-auto">
+            <!-- items -->
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-primary p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">To PDF</span>
+            </div>
+        </div>
+        <br>
+        <!-- *-to-{} grid -->
+        <div class="flex flex-wrap gap-4 font-ltr mx-auto">
+            <!-- items -->
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            <div class="convert-to-item size-36 bg-surface-300 dark:bg-darksurface-400 rounded flex flex-col items-center justify-center cursor-pointer">
+                <div class="bg-orange-500 p-2 mb-2 rounded">
+                    <svg class="w-8 h-8 text-darkTextColor"><use href="#file-icon"></use></svg>
+                </div>
+                <span class="">WORD To PDF</span>
+            </div>
+            
+        </div>
+
+    </section>
+
+    <!-- cards section -->
+    <section class="container mt-16">
+        <!-- grid container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- cards -->
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/squre.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">پی دی اف هایتان را در یک جا ادغام کنید</span>
+                </div>
+                <p>قراردادها، گزارش‌ها یا ارائه‌های خود را به راحتی در یک PDF ادغام کنید تا همه چیز را مرتب و در دسترس نگه دارید.</p>
+            </div>
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/monitor.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">پایگاه داده فرم های مالیاتی</span>
+                </div>
+                <p>ما صدها فرم مالیات، بیمه و سایر فرم‌ها را در یک مکان جمع‌آوری کرده‌ایم تا به شما کمک کنیم آن‌ها را به راحتی پیدا و ویرایش کنید.</p>
+            </div>
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/clock.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">تبدیل سریع</span>
+                </div>
+                <p>تبدیل از PDF یا بالعکس به طور متوسط ​​حدود 5 ثانیه طول می کشد. اکنون فایل خود را آپلود کنید و خودتان ببینید!</p>
+            </div>
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/password-protection.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">حفاظت از رمز عبور</span>
+                </div>
+                <p>اگر می‌خواهید از باز کردن، ویرایش یا چاپ اسنادتان توسط دیگران جلوگیری کنید، می‌توانید آنها را قفل کنید و دسترسی را کنترل کنید.</p>
+            </div>
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/laptop.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">فشرده سازی حجم فایل PDF</span>
+                </div>
+                <p>سایت ما فایل‌های شما را بهینه می‌کند تا اشتراک‌گذاری و ذخیره آن‌ها را آسان‌تر کند، همگی با حفظ کیفیت اصلی‌شان.</p>
+            </div>
+            <div class="bg-surface-400 dark:bg-darksurface-500 rounded-lg p-4">
+                <div class="flex items-center gap-3 mb-1">
+                    <img src="images/pen.svg" alt="" class="w-12 h-12">
+                    <span class="text-xl font-bold">امضای الکترونیکی آسان</span>
+                </div>
+                <p>ما 3 راه برای امضای اسناد PDF ارائه می دهیم. می توانید امضای خود را به صورت تصویر بکشید، تایپ کنید یا آپلود کنید.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- total downloads section -->
+    <section class="container bg-surface-400 dark:bg-darksurface-500 rounded-4xl py-6 px-3 flex flex-col items-center justify-center gap-3 mt-16">
+        <h2 class="text-lg md:text-2xl sm:max-w-8/10 text-center font-bold">حدود 500,000 کاربر برای تبدیل فایل های خود سایت ما را انتخاب کرده اند</h2>
+        <div class="flex flex-wrap gap-6 justify-center sm:justify-between items-center md:w-1/2">
+            <div class="flex gap-2 items-center">
+                <img src="images/archive-down-minimlistic.svg" alt="" class="hidden dark:block">
+                <img src="images/archive-down-minimlistic(light).svg" alt="" class="block dark:hidden">
+                <div class="flex flex-col gap-0.5 items-center">
+                    <span class="font-ltr font-bold text-lg">100k</span>
+                    <span class="text-thinTextColor dark:text-darkThinTextColor">بارگیری</span>
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <img src="images/document-add.svg" alt="" class="hidden dark:block">
+                <img src="images/document-add(light).svg" alt="" class="block dark:hidden">
+                <div class="flex flex-col gap-0.5 items-center">
+                    <span class="font-ltr font-bold text-lg">240k</span>
+                    <span class="text-thinTextColor dark:text-darkThinTextColor">تبدیل</span>
+                </div>
+            </div>
+            <div class="flex gap-2 items-center">
+                <img src="images/archive-up-minimlistic.svg" alt="" class="hidden dark:block">
+                <img src="images/archive-up-minimlistic(light).svg" alt="" class="block dark:hidden">
+                <div class="flex flex-col gap-0.5 items-center">
+                    <span class="font-ltr font-bold text-lg">320k</span>
+                    <span class="text-thinTextColor dark:text-darkThinTextColor">بارگزاری</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- start now section -->
+    <section class="container mt-16">
+        <div class="md:h-4/5 relative flex flex-col md:flex-row justify-between items-center rounded-lg gap-2 sm:gap-0 bg-gradient-to-l from-[#234C90] rtl:from-primary to-primary rtl:to-[#234C90] py-12 px-10">
+            <div class="text-darkTextColor space-y-5 max-w-100 relative z-10 text-center md:text-start">
+                <h3 class="text-xl md:text-3xl font-bold ltr:tracking-widest">همین حالا شروع کنید</h3>
+                <p class="text-lg">سرعت <span class="font-bold">تبدیل</span> فایل های خود را به صورت <span class="font-bold">رایگان</span> تجربه کنید.</p>
+            </div>
+            <a href="" class="py-5 px-4.5 bg-darkTextColor text-textColor font-bold rounded text-base relative z-10">شروع تبدیل</a>
+            <!-- absolute circle -->
+            <div class="absolute start-2 sm:start-16 top-4 z-0 bg-[#61a6fa99] w-26 h-26 rounded-full"></div>
+            <div class="absolute sm:start-0 end-16 sm:end-0 mx-auto bottom-6 z-0 bg-[#61a6fa99] w-12 h-12 rounded-full"></div>
+            <div class="absolute end-6 sm:end-1/4 top-6 sm:top-10 z-0 bg-[#61a6fa99] w-12 h-12 rounded-full"></div>
+        </div>
+    </section>
+    <script src="js/app.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

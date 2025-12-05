@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+    font-family: yekanBakh;
+    src: url("./../fonts/YekanBakhFaNum-Regular.woff") format("woff");
+}  
+@font-face {
+    font-family: yekanBakhBold;
+    src: url("./../fonts/YekanBakhFaNum-Bold.woff") format("woff");
+}  
+
+@font-face {
+    font-family: poppins;
+    src: url("./../fonts/Poppins-Regular.woff") format("woff");
+}  
+
+@theme{
+    --font-ltr:"poppins","yekanBakh";
+    --font-rtl:"yekanBakh","poppins";
+
+    --color-primary:#3B82F6;
+
+    --color-surface-100:#fafafa;
+    --color-surface-200:#f8f8f8;
+    --color-surface-300:#f3f3f3;
+    --color-surface-400:#e3e3e3;
+    --color-surface-500:#cdcdcd;
+    --color-surface-600:#a2a2a2;
+    --color-surface-700:#767676;
+
+    --color-darksurface-100:#8b8b8b;
+    --color-darksurface-200:#717171;
+    --color-darksurface-300:#575757;
+    --color-darksurface-400:#3f3f3f;
+    --color-darksurface-500:#282828;
+
+    --color-darksurfaceTonial-100:#8f938f;
+    --color-darksurfaceTonial-200:#757a75;
+    --color-darksurfaceTonial-300:#5c625c;
+    --color-darksurfaceTonial-400:#454b44;
+    --color-darksurfaceTonial-500:#2e352e;
+
+    --color-background:#eeeeee;
+    --color-darkBackground:#121212;
+
+
+    --color-textColor:#292524;
+    --color-darkTextColor:#ECDFCC;
+    --color-thinTextColor:#57534e;
+    --color-darkThinTextColor:#a8a29e;
+
+    --font-yekanbakh:yekanBakh;
+    --font-yekanbakhBold:yekanBakhBold;
+
+    
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+.hide{
+    visibility: hidden;
+    opacity: 0;
+}
+
+.custom-shadow{
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+}
+.dark .custom-shadow{
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 1);
+}
+
+.droping {
+    @apply animate-pulse
+}
